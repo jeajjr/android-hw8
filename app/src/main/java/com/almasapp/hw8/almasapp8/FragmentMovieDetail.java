@@ -58,18 +58,6 @@ public class FragmentMovieDetail extends Fragment {
         (new MovieDetailDownloader(getActivity(), title, year, length, stars, director, cover,
                 rating, description)).execute(movieID);
 
-        /*
-        title.setText(movie.get("name").toString());
-        year.setText(movie.get("year").toString());
-        length.setText(movie.get("length").toString());
-        stars.setText(getResources().getText(R.string.movies_stars) + " " + movie.get("stars").toString());
-        director.setText(getResources().getText(R.string.movies_director) + " " + movie.get("director").toString());
-        cover.setImageResource((Integer) movie.get("image"));
-        rating.setRating( (int) Double.parseDouble(movie.get("rating").toString()) + 1 );
-        description.setText(movie.get("description").toString());
-*/
-
-
         return rootView;
     }
 

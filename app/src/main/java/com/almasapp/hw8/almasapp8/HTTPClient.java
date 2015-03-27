@@ -66,7 +66,7 @@ public class HTTPClient {
         Bitmap bitmap = null;
 
         try {
-            con = (HttpURLConnection) ( new URL(url)).openConnection();
+            con = (HttpURLConnection) (new URL(url)).openConnection();
             con.setRequestMethod("GET");
             con.setDoInput(true);
             con.setDoOutput(true);

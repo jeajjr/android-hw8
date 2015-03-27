@@ -1,28 +1,48 @@
 package com.almasapp.hw8.almasapp8;
 
-import android.app.Activity;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
+import android.util.Log;
+import android.util.LruCache;
 import android.widget.ImageView;
 
 import java.lang.ref.WeakReference;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 
-/**
- * Created by José Ernesto on 25/03/2015.
- */
 public class ImageDownloader extends AsyncTask<String, Void, Bitmap> {
     private final WeakReference<ImageView> imageViewWeakReference;
 
+    private static LruCache<String, Bitmap> imageCache;
+
     public ImageDownloader(ImageView imageView) {
-        imageViewWeakReference = new WeakReference<ImageView>(imageView);
+        imageViewWeakReference = new WeakReference<>(imageView);
+
+        if (imageCache == null) {
+            final int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
+            final int cacheSize = maxMemory / 8;
+
+            Log.d("ImageDownloader", "cacheSize " + cacheSize);
+
+            imageCache = new LruCache<String, Bitmap>(cacheSize) {
+                @Override
+                protected int sizeOf(String key, Bitmap bitmap) {
+                    return bitmap.getByteCount() / 1024;
+                }
+            };
+        }
     }
 
     @Override
     protected Bitmap doInBackground(String... params) {
         String url = params[0];
-        Bitmap bitmap = null;
+        Bitmap bitmap = imageCache.get(url);
 
-        bitmap = HTTPClient.getMovieImage(url);
+        if (bitmap == null) {
+            bitmap = HTTPClient.getMovieImage(url);
+            imageCache.put(url, bitmap);
+        }
 
         return bitmap;
     }
