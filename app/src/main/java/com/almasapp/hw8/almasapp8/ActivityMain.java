@@ -6,12 +6,21 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 
-public class ActivityMain extends ActionBarActivity {
+public class ActivityMain extends ActionBarActivity implements FragmentRecyclerView.OnItemClickedListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.container, new FragmentRecyclerView())
+                .commit();
     }
 
+
+    @Override
+    public void onItemClick(int position) {
+
+    }
 }
