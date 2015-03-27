@@ -19,14 +19,19 @@ public class HTTPClient {
     private static final String BASE_URL = "http://www.cis.syr.edu/~wedu/Teaching/android/Labs/json/";
 
     public static String getMovieList(String requestString) {
+        return getData(BASE_URL + requestString + ".json");
+    }
+
+    public static String getMovieDetail(String requestString) {
+        return getData(BASE_URL + requestString + ".json");
+    }
+
+    public static String getData(String requestString) {
         HttpURLConnection con = null;
         InputStream is = null;
 
-        String finalRequest = BASE_URL + requestString + ".json";
-        Log.d(TAG, "sending request " + finalRequest);
-
         try {
-            con = (HttpURLConnection) ( new URL(finalRequest)).openConnection();
+            con = (HttpURLConnection) ( new URL(requestString)).openConnection();
             con.setRequestMethod("GET");
             con.setDoInput(true);
             con.setDoOutput(true);

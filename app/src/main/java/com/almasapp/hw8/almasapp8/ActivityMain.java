@@ -18,9 +18,11 @@ public class ActivityMain extends ActionBarActivity implements FragmentRecyclerV
                 .commit();
     }
 
-
     @Override
-    public void onItemClick(int position) {
-
+    public void onItemClick(String id) {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container, FragmentMovieDetail.newInstance(id))
+                .addToBackStack(null)
+                .commit();
     }
 }

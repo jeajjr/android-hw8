@@ -25,23 +25,11 @@ public class FragmentRecyclerView extends Fragment {
     private OnItemClickedListener mListener;
 
     public interface OnItemClickedListener {
-        public void onItemClick(int position);
+        public void onItemClick(String id);
     }
 
     public FragmentRecyclerView() {
     }
-/*
-    public static FragmentRecyclerView newInstance(ArrayList<Map<String, ?>> movieList, int layout) {
-        FragmentRecyclerView fragment = new FragmentRecyclerView();
-
-        Bundle args = new Bundle();
-        args.putSerializable(ARG_MOVIE_LIST, movieList);
-        args.putInt(ARG_LAYOUT, layout);
-        fragment.setArguments(args);
-
-        return fragment;
-    }
-    */
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -87,7 +75,7 @@ public class FragmentRecyclerView extends Fragment {
             public void onItemClick(View view, int position) {
                 Log.d(TAG, "list item clicked");
 
-                mListener.onItemClick(position);
+                mListener.onItemClick((String) movieData.get(position).get("id"));
             }
 
             @Override
